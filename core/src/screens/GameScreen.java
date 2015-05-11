@@ -51,12 +51,12 @@ public class GameScreen implements Screen {
 		
 		batch.begin();
 			batch.draw(background,0,0);
-			batch.draw(game.textures.magicCard,0,20);
-			batch.draw(game.textures.warCard,0,290);
-			batch.draw(game.textures.buildCard,0,560);
+			batch.draw(game.textures.magicCard,0,0);
+			batch.draw(game.textures.warCard,182,0);
+			batch.draw(game.textures.buildCard,364,0);
 			font.draw(batch, "Gold : "+game.gameState.gold, 300, 1050);
 			font.draw(batch, "Population : "+game.gameState.population, 700, 1050);
-			font.draw(batch, "Magic : "+game.gameState.sciencePoints, 1200, 1050);
+			font.draw(batch, "Magic : "+game.gameState.magic, 1200, 1050);
 
 		batch.end();
 		
@@ -68,9 +68,18 @@ public class GameScreen implements Screen {
 			int x = (int) tap.x;
 			int y = (int) tap.y;
 			
-			if(x < 1000 && x > 0 && y < 1080 && y > 440){
+			// Touched magic card
+			if(x < 180 && x > 0 && y < 280 && y > 0){
 				//game.setScreen(new MapScreen(game));
-			} 
+			}
+			// Touched war card
+			if(x < 364 && x > 181 && y < 280 && y > 0){
+				//game.setScreen(new MapScreen(game));
+			}
+			// Touched build card
+			if(x < 545 && x > 365 && y < 280 && y > 0){
+				//game.setScreen(new MapScreen(game));
+			}
 
 		}
 		

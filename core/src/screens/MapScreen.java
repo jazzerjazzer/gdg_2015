@@ -52,8 +52,8 @@ public class MapScreen implements Screen {
 			int x = (int) tap.x;
 			int y = (int) tap.y;
 			
-			if(x < 780 && x > 500 && y < 520 && y > 440){
-				// tıklanınca bişeyler
+			if(x < 1920 && x > 0 && y < 1080 && y > 0){
+				game.setScreen(new GameScreen(game));
 			} 
 
 		}

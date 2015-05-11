@@ -13,10 +13,10 @@ public class Textures {
 	public Textures(){
 		
 		mainMenuBackground = new Texture(Gdx.files.internal("menus/mainMenuScreen.jpg"));
+		gameBackground = new Texture(Gdx.files.internal("menus/gameScreen.jpg"));
+		mapBackground = new Texture(Gdx.files.internal("menus/mapScreen.jpg"));
 		
-		gameBackground = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));
 		buildBackground = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));
-		mapBackground = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));
 		soldierBackground = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));
 		upgradeBackground = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));
 		

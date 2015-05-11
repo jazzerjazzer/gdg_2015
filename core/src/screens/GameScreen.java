@@ -7,15 +7,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.pikseloyun.gdg2015.GameState;
 import com.pikseloyun.gdg2015.MainGame;
 
 public class GameScreen implements Screen {
 
 	MainGame game;
 	Texture background;
-	
-	GameState gameState;
 	
 	OrthographicCamera camera;
 	SpriteBatch batch;
@@ -30,7 +27,6 @@ public class GameScreen implements Screen {
 		
 		batch = new SpriteBatch();
 		background = game.textures.gameBackground;
-		gameState = new GameState();
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1920, 1080);
@@ -56,8 +52,8 @@ public class GameScreen implements Screen {
 			int x = (int) tap.x;
 			int y = (int) tap.y;
 			
-			if(x < 780 && x > 500 && y < 520 && y > 440){
-				// tıklanınca bişeyler
+			if(x < 1000 && x > 0 && y < 1080 && y > 440){
+				game.setScreen(new MapScreen(game));
 			} 
 
 		}

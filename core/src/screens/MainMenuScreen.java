@@ -1,7 +1,10 @@
 package screens;
 
+import utils.CustomProgressBar;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,6 +20,7 @@ public class MainMenuScreen implements Screen {
 	public OrthographicCamera camera;
 	public SpriteBatch batch;
 	private Vector3 tap = new Vector3(0,0,0);
+	private CustomProgressBar bar;
 	
 	public MainMenuScreen(MainGame game) {
 		this.game = game;
@@ -27,6 +31,7 @@ public class MainMenuScreen implements Screen {
 		
 		batch = new SpriteBatch();
 		background = game.textures.mainMenuBackground;
+		bar = new CustomProgressBar(Color.BLUE, "empty.png", "empty", 0, 100, 100, 100, 290, 100, 2);
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1920, 1080);
@@ -43,6 +48,8 @@ public class MainMenuScreen implements Screen {
 		batch.begin();
 			batch.draw(background,0,0);
 		batch.end();
+		bar.updateProgressBar(delta, 5);
+
 		
 		if(Gdx.input.justTouched()){
 			
@@ -53,7 +60,7 @@ public class MainMenuScreen implements Screen {
 			int y = (int) tap.y;
 			
 			// rakamlar değişcek.
-			if(x < 780 && x > 500 && y < 520 && y > 440){
+			if(x < 1920 && x > 500 && y < 1080 && y > 440){
 				game.setScreen(new GameScreen(game));
 			}
 

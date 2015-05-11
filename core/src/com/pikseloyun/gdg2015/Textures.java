@@ -12,7 +12,8 @@ public class Textures {
 	
 	public Textures(){
 		
-		mainMenuBackground = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));
+		mainMenuBackground = new Texture(Gdx.files.internal("menus/mainMenuScreen.jpg"));
+		
 		gameBackground = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));
 		buildBackground = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));
 		mapBackground = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));

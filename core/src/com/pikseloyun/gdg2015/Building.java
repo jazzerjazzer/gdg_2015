@@ -1,11 +1,11 @@
 package com.pikseloyun.gdg2015;
 
-public class Buildings {
+public class Building {
 
 	public int level;
 	public int x, y;
 	
-	public Buildings(int x, int y){
+	public Building(int x, int y){
 		level = 1;
 		this.x = x;
 		this.y = y;

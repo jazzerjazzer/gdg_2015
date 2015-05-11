@@ -1,5 +1,7 @@
 package screens;
 
+import utils.Animator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -28,6 +30,9 @@ public class GameScreen implements Screen, GestureListener {
     private BitmapFont font;
     private GestureDetector gd;
     int panX = 0;
+    Animator animator;
+    boolean placing = false;
+    
 	public GameScreen(MainGame game) {
 		this.game = game;
 	}
@@ -46,6 +51,8 @@ public class GameScreen implements Screen, GestureListener {
 		font.setColor(Color.WHITE);
 		gd = new GestureDetector(this);
 		Gdx.input.setInputProcessor(gd);
+		animator = new Animator();
+		animator.setupAnimation(new Texture("animations/warrior_spritesheet.png"), batch, 300, 300, 6, 6);
 	}
 
 	@Override
@@ -63,7 +70,7 @@ public class GameScreen implements Screen, GestureListener {
 			font.draw(batch, "Gold : "+game.gameState.gold, 300, 1050);
 			font.draw(batch, "Population : "+game.gameState.population, 700, 1050);
 			font.draw(batch, "Magic : "+game.gameState.magic, 1200, 1050);
-
+			//animator.animate();
 		batch.end();
 		
 		if(Gdx.input.justTouched()){
@@ -77,14 +84,24 @@ public class GameScreen implements Screen, GestureListener {
 			// Touched magic card
 			if(x < 180 && x > 0 && y < 280 && y > 0){
 				//game.setScreen(new MapScreen(game));
+				placing = true;
+				
 			}
 			// Touched war card
 			if(x < 364 && x > 181 && y < 280 && y > 0){
 				//game.setScreen(new MapScreen(game));
+				placing = true;
 			}
 			// Touched build card
 			if(x < 545 && x > 365 && y < 280 && y > 0){
 				//game.setScreen(new MapScreen(game));
+				placing = true;
+			}
+			if(placing && x > 300){
+				batch.begin();
+					batch.draw(game.textures.lamp, x, y);
+				batch.end();
+				placing = false;
 			}
 
 		}

@@ -9,7 +9,7 @@ public class GameState {
 	public int farmCost, barracksCost, houseCost, cryptCost;
 
 	public Upgrades upgrades;
-	public Buildings[] buildings;
+	public Building[] buildings;
 
 	// Starting Constants
 	public final int startingPop = 10; 
@@ -20,7 +20,7 @@ public class GameState {
 	public GameState(){
 
 		upgrades = new Upgrades();
-		buildings = new Buildings[80];
+		buildings = new Building[80];
 
 		population = startingPop;
 		soldiers = startingSoldiers;

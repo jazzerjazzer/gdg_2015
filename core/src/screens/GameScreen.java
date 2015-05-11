@@ -69,7 +69,7 @@ public class GameScreen implements Screen {
 			int y = (int) tap.y;
 			
 			if(x < 1000 && x > 0 && y < 1080 && y > 440){
-				game.setScreen(new MapScreen(game));
+				//game.setScreen(new MapScreen(game));
 			} 
 
 		}

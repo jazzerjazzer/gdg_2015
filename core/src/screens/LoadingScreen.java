@@ -1,11 +1,22 @@
 package screens;
 
+import utils.CustomProgressBar;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.pikseloyun.gdg2015.MainGame;
 
 public class LoadingScreen implements Screen {
@@ -30,9 +41,7 @@ public class LoadingScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		
 		background = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));
-		
 		bgLoaded = true;
-		
 	}
 
 	@Override
@@ -57,8 +66,8 @@ public class LoadingScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(background,0,0);
-		batch.end();
 
+		batch.end();
 	}
 
 	public void loadTextures(){

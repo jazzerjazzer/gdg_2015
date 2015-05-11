@@ -42,6 +42,10 @@ public class GameScreen implements Screen {
 		
 		batch.begin();
 			batch.draw(background,0,0);
+			batch.draw(game.textures.magicCard,0,20);
+			batch.draw(game.textures.warCard,0,290);
+			batch.draw(game.textures.buildCard,0,560);
+
 		batch.end();
 		
 		if(Gdx.input.justTouched()){

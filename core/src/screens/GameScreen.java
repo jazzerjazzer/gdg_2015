@@ -1,6 +1,9 @@
 package screens;
 
 import utils.Animator;
+import Buildings.Barracks;
+import Buildings.Crypt;
+import Buildings.House;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -31,7 +34,7 @@ public class GameScreen implements Screen, GestureListener {
     private GestureDetector gd;
     int panX = 0;
     Animator animator;
-    boolean placing = false;
+    int placing = -1;
     
 	public GameScreen(MainGame game) {
 		this.game = game;
@@ -59,6 +62,7 @@ public class GameScreen implements Screen, GestureListener {
 	public void render(float delta) {
 		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClearColor(1, 1, 1, 1);
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		
@@ -70,6 +74,11 @@ public class GameScreen implements Screen, GestureListener {
 			font.draw(batch, "Gold : "+game.gameState.gold, 300, 1050);
 			font.draw(batch, "Population : "+game.gameState.population, 700, 1050);
 			font.draw(batch, "Magic : "+game.gameState.magic, 1200, 1050);
+			for (int i = 0; i < game.gameState.buildings.length; i++){
+				if(game.gameState.buildings[i] != null){
+					game.gameState.buildings[i].draw(batch);
+				}
+			}
 			//animator.animate();
 		batch.end();
 		
@@ -83,25 +92,31 @@ public class GameScreen implements Screen, GestureListener {
 			
 			// Touched magic card
 			if(x < 180 && x > 0 && y < 280 && y > 0){
-				//game.setScreen(new MapScreen(game));
-				placing = true;
+				placing = 1;
 				
 			}
 			// Touched war card
 			if(x < 364 && x > 181 && y < 280 && y > 0){
-				//game.setScreen(new MapScreen(game));
-				placing = true;
+				placing = 2;
 			}
 			// Touched build card
 			if(x < 545 && x > 365 && y < 280 && y > 0){
-				//game.setScreen(new MapScreen(game));
-				placing = true;
+				placing = 3;
 			}
-			if(placing && x > 300){
-				batch.begin();
-					batch.draw(game.textures.lamp, x, y);
-				batch.end();
-				placing = false;
+			if(placing != -1 && y > 300){
+				System.out.println(placing);
+				if(game.gameState.buildings[x/200] == null){
+					if(placing == 1){
+						game.gameState.buildings[x/200] = new Crypt((x/200)*200, y, game.textures.smallMagic); 
+					}
+					if(placing == 2){
+						game.gameState.buildings[x/200] = new Barracks((x/200)*200, y, game.textures.smallMilitary);
+					} 
+					if(placing == 3){
+						game.gameState.buildings[x/200] = new House((x/200)*200, y, game.textures.smallHouse); 
+					}
+					placing = -1;
+				}
 			}
 
 		}
@@ -169,7 +184,6 @@ public class GameScreen implements Screen, GestureListener {
 			panX = 0;
 		if (panX < 1920 - 8000)
 			panX = 1920-8000;
-		System.out.println(panX);
 		return false;
 	}
 

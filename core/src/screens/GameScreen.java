@@ -9,10 +9,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.input.GestureDetector.GestureListener;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.pikseloyun.gdg2015.MainGame;
 
-public class GameScreen implements Screen {
+public class GameScreen implements Screen, GestureListener {
 
 	MainGame game;
 	Texture background;
@@ -23,7 +26,8 @@ public class GameScreen implements Screen {
 	
 	private Texture fontTexture;
     private BitmapFont font;
-    
+    private GestureDetector gd;
+    int panX = 0;
 	public GameScreen(MainGame game) {
 		this.game = game;
 	}
@@ -40,6 +44,8 @@ public class GameScreen implements Screen {
 		fontTexture = new Texture(Gdx.files.internal("font.png"));
 		font = new BitmapFont(Gdx.files.internal("font.fnt"), new TextureRegion(fontTexture), false);
 		font.setColor(Color.WHITE);
+		gd = new GestureDetector(this);
+		Gdx.input.setInputProcessor(gd);
 	}
 
 	@Override
@@ -50,7 +56,7 @@ public class GameScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		
 		batch.begin();
-			batch.draw(background,0,0);
+			batch.draw(background,panX,0);
 			batch.draw(game.textures.magicCard,0,0);
 			batch.draw(game.textures.warCard,182,0);
 			batch.draw(game.textures.buildCard,364,0);
@@ -114,5 +120,60 @@ public class GameScreen implements Screen {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public boolean touchDown(float x, float y, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean tap(float x, float y, int count, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean longPress(float x, float y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean fling(float velocityX, float velocityY, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean pan(float x, float y, float deltaX, float deltaY) {
+		panX += (int)deltaX;
+		if(panX > 0)
+			panX = 0;
+		if (panX < 1920 - 8000)
+			panX = 1920-8000;
+		System.out.println(panX);
+		return false;
+	}
+
+	@Override
+	public boolean panStop(float x, float y, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean zoom(float initialDistance, float distance) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2,
+			Vector2 pointer1, Vector2 pointer2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }

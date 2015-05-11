@@ -2,7 +2,7 @@ package com.pikseloyun.gdg2015;
 
 public class GameState {
 
-	public int population, soldiers, gold, sciencePoints;
+	public int population, soldiers, gold, magic;
 	
 	public int farmTime, barracksTime, houseTime, cryptTime;
 	public int farmProduction, barracksProduction, houseProduction, cryptProduction;
@@ -25,7 +25,7 @@ public class GameState {
 		population = startingPop;
 		soldiers = startingSoldiers;
 		gold = startingGold;
-		sciencePoints = startingSciencePoints;
+		magic = startingSciencePoints;
 
 		farmTime = 100;
 		houseTime = 100;
@@ -53,7 +53,7 @@ public class GameState {
 	}
 
 	public void collectSciencePoints(){
-		sciencePoints += cryptProduction;
+		magic += cryptProduction;
 	}
 
 	public void collectSoldiers(){
@@ -65,7 +65,7 @@ public class GameState {
 		if(u.buildingType != 1)
 			return;
 		
-		sciencePoints -= u.cost;
+		magic -= u.cost;
 
 		// time reduce
 		if(u.type == 0){
@@ -89,7 +89,7 @@ public class GameState {
 		if(u.buildingType != 2)
 			return;
 
-		sciencePoints -= u.cost;
+		magic -= u.cost;
 		
 		// time reduce
 		if(u.type == 0){
@@ -113,7 +113,7 @@ public class GameState {
 		if(u.buildingType != 3)
 			return;
 
-		sciencePoints -= u.cost;
+		magic -= u.cost;
 		
 		// time reduce
 		if(u.type == 0){
@@ -137,7 +137,7 @@ public class GameState {
 		if(u.buildingType != 4)
 			return;
 
-		sciencePoints -= u.cost;
+		magic -= u.cost;
 		
 		// time reduce
 		if(u.type == 0){

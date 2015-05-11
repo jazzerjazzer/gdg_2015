@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.pikseloyun.gdg2015.MainGame;
 
@@ -21,6 +23,9 @@ public class MainMenuScreen implements Screen {
 	public SpriteBatch batch;
 	private Vector3 tap = new Vector3(0,0,0);
 	private CustomProgressBar bar;
+	
+    private Texture fontTexture;
+    private BitmapFont font; //** font **//
 	
 	public MainMenuScreen(MainGame game) {
 		this.game = game;
@@ -36,6 +41,8 @@ public class MainMenuScreen implements Screen {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1920, 1080);
 		
+		fontTexture = new Texture(Gdx.files.internal("font.png"));
+		font = new BitmapFont(Gdx.files.internal("font.fnt"), new TextureRegion(fontTexture), false);
 	}
 
 	@Override
@@ -47,9 +54,12 @@ public class MainMenuScreen implements Screen {
 		
 		batch.begin();
 			batch.draw(background,0,0);
+			font.draw(batch, "HELLO WORLD!", 50, 700);
+	        font.draw(batch, "BELOW ARE FOUR BOXES:", 100, 650);
 		batch.end();
 		bar.updateProgressBar(delta, 5);
 
+		
 		
 		if(Gdx.input.justTouched()){
 			

@@ -9,7 +9,6 @@ public class MainGame extends Game {
 	public Textures textures;
 	public GameState gameState;
 	
-	
 	@Override
 	public void create() {
 		textures = new Textures();

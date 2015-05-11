@@ -29,7 +29,7 @@ public class SoldierScreen implements Screen {
 		background = game.textures.soldierBackground;
 		
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1280, 720);
+		camera.setToOrtho(false, 1920, 1080);
 		
 	}
 

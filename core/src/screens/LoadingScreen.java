@@ -37,7 +37,7 @@ public class LoadingScreen implements Screen {
 		
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1280, 720);
+		camera.setToOrtho(false, 1920, 1080);
 		batch.setProjectionMatrix(camera.combined);
 		
 		background = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));

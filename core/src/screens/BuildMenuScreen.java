@@ -29,7 +29,7 @@ public class BuildMenuScreen implements Screen {
 		background = game.textures.buildBackground;
 		
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1280, 720);
+		camera.setToOrtho(false, 1920, 1080);
 		
 	}
 

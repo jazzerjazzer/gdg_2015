@@ -1,6 +1,9 @@
 package screens;
 
+import java.sql.Time;
+
 import utils.Animator;
+import utils.CustomProgressBar;
 import Buildings.Barracks;
 import Buildings.Crypt;
 import Buildings.House;
@@ -35,8 +38,9 @@ public class GameScreen implements Screen, GestureListener {
     int panX = 0;
     Animator animator;
     int placing = -1;
-    
-	public GameScreen(MainGame game) {
+    long startTime;
+	
+    public GameScreen(MainGame game) {
 		this.game = game;
 	}
 	
@@ -76,8 +80,18 @@ public class GameScreen implements Screen, GestureListener {
 			font.draw(batch, "Magic : "+game.gameState.magic, 1200, 1050);
 			for (int i = 0; i < game.gameState.buildings.length; i++){
 				if(game.gameState.buildings[i] != null){
-					game.gameState.buildings[i].draw(batch);
+					if(game.gameState.buildings[i].y > 285){
+						game.gameState.buildings[i].y-=5;
+					}
+					batch.draw(game.gameState.buildings[i].texture, panX+game.gameState.buildings[i].x, 
+							game.gameState.buildings[i].y);
+					if(game.gameState.buildings[i].progress){
+						
+					}
 				}
+			}
+			if(System.currentTimeMillis() - startTime < 3000){
+				font.draw(batch, "Cannot place building here. You can upgrade!", 500, 900);
 			}
 			//animator.animate();
 		batch.end();
@@ -92,8 +106,7 @@ public class GameScreen implements Screen, GestureListener {
 			
 			// Touched magic card
 			if(x < 180 && x > 0 && y < 280 && y > 0){
-				placing = 1;
-				
+				placing = 1;	
 			}
 			// Touched war card
 			if(x < 364 && x > 181 && y < 280 && y > 0){
@@ -104,7 +117,7 @@ public class GameScreen implements Screen, GestureListener {
 				placing = 3;
 			}
 			if(placing != -1 && y > 300){
-				System.out.println(placing);
+				x = Math.abs(x- panX);
 				if(game.gameState.buildings[x/200] == null){
 					if(placing == 1){
 						game.gameState.buildings[x/200] = new Crypt((x/200)*200, y, game.textures.smallMagic); 
@@ -116,9 +129,19 @@ public class GameScreen implements Screen, GestureListener {
 						game.gameState.buildings[x/200] = new House((x/200)*200, y, game.textures.smallHouse); 
 					}
 					placing = -1;
+				}else{
+					startTime = System.currentTimeMillis();
 				}
 			}
-
+			if(placing == -1){
+				x = Math.abs(x- panX);
+				if(game.gameState.buildings[x/200] != null && game.gameState.buildings[x/200].progress == false){
+					game.gameState.buildings[x/200].progress = true;
+					game.gameState.buildings[x/200].bar = new CustomProgressBar(Color.BLUE, 
+							"empty.png", "empty", 0, 100, (x/200)*200, 
+							game.gameState.buildings[x/200].level*100+50, 200, 50, 2);
+				}
+			}
 		}
 		
 	}

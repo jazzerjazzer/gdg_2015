@@ -1,11 +1,11 @@
 package Buildings;
 
-public class Crypt {
+import com.pikseloyun.gdg2015.Buildings;
+
+public class Crypt extends Buildings {
 	
-	public int level;
-	
-	public Crypt(){
-		level = 0;
+	public Crypt(int x, int y){
+		super(x, y);
 	}
 
 }

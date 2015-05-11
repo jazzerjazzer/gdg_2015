@@ -1,11 +1,11 @@
 package Buildings;
 
-public class Barracks {
+import com.pikseloyun.gdg2015.Buildings;
 
-	public int level;
+public class Barracks extends Buildings {
 	
-	public Barracks(){
-		level = 0;
+	public Barracks(int x, int y){
+		super(x, y);
 	}
 	
 }

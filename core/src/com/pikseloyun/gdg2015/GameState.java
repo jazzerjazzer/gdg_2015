@@ -8,8 +8,8 @@ public class GameState {
 	public int farmProduction, barracksProduction, houseProduction, cryptProduction;
 	public int farmCost, barracksCost, houseCost, cryptCost;
 
-	public Buildings buildings;
 	public Upgrades upgrades;
+	public Buildings[] buildings;
 
 	// Starting Constants
 	public final int startingPop = 10; 
@@ -19,8 +19,8 @@ public class GameState {
 
 	public GameState(){
 
-		buildings = new Buildings();
 		upgrades = new Upgrades();
+		buildings = new Buildings[80];
 
 		population = startingPop;
 		soldiers = startingSoldiers;
@@ -60,120 +60,7 @@ public class GameState {
 		soldiers += barracksProduction;
 	}
 
-	public void buyFarmUpgrade(Upgrade u){
-
-		if(u.buildingType != 1)
-			return;
-		
-		magic -= u.cost;
-
-		// time reduce
-		if(u.type == 0){
-			farmTime -= farmTime * u.effect/100;
-		}
-
-		// cost reduce
-		if(u.type == 1){
-			farmCost -= farmCost * u.effect/100;
-		}
-
-		// production bonus
-		if(u.type == 2){
-			farmProduction += farmProduction * u.effect/100;
-		}
-
-	}
 	
-	public void buyHouseUpgrade(Upgrade u){
 
-		if(u.buildingType != 2)
-			return;
-
-		magic -= u.cost;
-		
-		// time reduce
-		if(u.type == 0){
-			houseTime -= houseTime * u.effect/100;
-		}
-
-		// cost reduce
-		if(u.type == 1){
-			houseCost -= houseCost * u.effect/100;
-		}
-
-		// production bonus
-		if(u.type == 2){
-			houseProduction += houseProduction * u.effect/100;
-		}
-
-	}
-	
-	public void buyCryptUpgrade(Upgrade u){
-
-		if(u.buildingType != 3)
-			return;
-
-		magic -= u.cost;
-		
-		// time reduce
-		if(u.type == 0){
-			cryptTime -= cryptTime * u.effect/100;
-		}
-
-		// cost reduce
-		if(u.type == 1){
-			cryptCost -= cryptCost * u.effect/100;
-		}
-
-		// production bonus
-		if(u.type == 2){
-			cryptProduction += cryptProduction * u.effect/100;
-		}
-
-	}
-	
-	public void buyBarracksUpgrade(Upgrade u){
-
-		if(u.buildingType != 4)
-			return;
-
-		magic -= u.cost;
-		
-		// time reduce
-		if(u.type == 0){
-			barracksTime -= barracksTime * u.effect/100;
-		}
-
-		// cost reduce
-		if(u.type == 1){
-			barracksCost -= barracksCost * u.effect/100;
-		}
-
-		// production bonus
-		if(u.type == 2){
-			barracksProduction += barracksProduction * u.effect/100;
-		}
-
-	}
-
-	public void buildFarm(){
-		population -= farmCost + farmCost/2 * buildings.farm.level;
-		buildings.farm.level++;
-	}
-	
-	public void buildHouse(){
-		population -= houseCost + houseCost/2 * buildings.house.level;
-		buildings.house.level++;
-	}
-	
-	public void buildCrypt(){
-		gold -= cryptCost + cryptCost/2 * buildings.crypt.level;
-		buildings.crypt.level++;
-	}
-	
-	public void buildBarracks(){
-		gold -= barracksCost + barracksCost/2 * buildings.barracks.level;
-		buildings.barracks.level++;
-	}
 	
 }

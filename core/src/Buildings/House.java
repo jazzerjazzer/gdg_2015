@@ -1,11 +1,11 @@
 package Buildings;
 
-public class House {
+import com.pikseloyun.gdg2015.Buildings;
+
+public class House extends Buildings {
 	
-	public int level;
-	
-	public House(){
-		level = 1;
+	public House(int x, int y){
+		super(x, y);
 	}
 
 }

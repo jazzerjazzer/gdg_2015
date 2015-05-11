@@ -5,14 +5,21 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class Textures {
 
-	public Texture mainMenuBackground, gameBackground, buildBackground, 
-		mapBackground, soldierBackground, upgradeBackground;
+	public Texture mainMenuBackground, gameBackground, mapBackground;
+	public Texture warCard, magicCard, buildCard;
 	
-	public Texture houseIcon, peopleIcon, scienceIcon, farmIcon;
-	public Texture warCard, magicCard, buildCard, logo;
+	public Texture smallHouse, middleHouse, bigHouse;
+	public Texture smallMagic, middleMagic, bigMagic;
+	public Texture smallMilitary, middleMilitary, bigMilitary;
+	
+	public Texture pumpkin, pumpkin2, pumpkin3, lamp, sign;
 
 	
 	public Textures(){
+
+	}
+	
+	public void loadTextures(){
 		
 		mainMenuBackground = new Texture(Gdx.files.internal("menus/mainMenuScreen.jpg"));
 		gameBackground = new Texture(Gdx.files.internal("menus/gameScreen.png"));
@@ -21,15 +28,24 @@ public class Textures {
 		warCard = new Texture(Gdx.files.internal("icons/warCard.png"));
 		magicCard = new Texture(Gdx.files.internal("icons/magicCard.png"));
 		buildCard = new Texture(Gdx.files.internal("icons/buildCard.png"));
-		logo = new Texture(Gdx.files.internal("icons/upgrade_icon.png"));
 		
-		buildBackground = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));
-		soldierBackground = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));
-		upgradeBackground = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));
+		smallHouse = new Texture(Gdx.files.internal("buildings/smallHouse.png"));
+		middleHouse = new Texture(Gdx.files.internal("buildings/middleHouse.png"));
+		bigHouse = new Texture(Gdx.files.internal("buildings/bigHouse.png"));
 		
-	}
-	
-	public void loadTextures(){
+		smallMagic = new Texture(Gdx.files.internal("buildings/smallMagic.png"));
+		middleMagic = new Texture(Gdx.files.internal("buildings/middleMagic.png"));
+		bigMagic = new Texture(Gdx.files.internal("buildings/bigMagic.png"));
+		
+		smallMilitary = new Texture(Gdx.files.internal("buildings/smallMilitary.png"));
+		middleMilitary = new Texture(Gdx.files.internal("buildings/middleMilitary.png"));
+		bigMilitary = new Texture(Gdx.files.internal("buildings/bigMilitary.png"));
+		
+		pumpkin = new Texture(Gdx.files.internal("buildings/pumpkin.png"));
+		pumpkin2 = new Texture(Gdx.files.internal("buildings/pumpkin2.png"));
+		pumpkin3 = new Texture(Gdx.files.internal("buildings/pumpkin3.png"));
+		lamp = new Texture(Gdx.files.internal("buildings/lamp.png"));
+		sign = new Texture(Gdx.files.internal("buildings/sign.png"));
 		
 	}
 	

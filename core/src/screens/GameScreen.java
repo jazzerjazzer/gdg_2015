@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.pikseloyun.gdg2015.GameState;
 import com.pikseloyun.gdg2015.MainGame;
 
 public class GameScreen implements Screen {
@@ -14,8 +15,10 @@ public class GameScreen implements Screen {
 	MainGame game;
 	Texture background;
 	
-	public OrthographicCamera camera;
-	public SpriteBatch batch;
+	GameState gameState;
+	
+	OrthographicCamera camera;
+	SpriteBatch batch;
 	private Vector3 tap = new Vector3(0,0,0);
 	
 	public GameScreen(MainGame game) {
@@ -27,6 +30,7 @@ public class GameScreen implements Screen {
 		
 		batch = new SpriteBatch();
 		background = game.textures.gameBackground;
+		gameState = new GameState();
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1280, 720);

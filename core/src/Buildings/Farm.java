@@ -2,10 +2,10 @@ package Buildings;
 
 public class Farm {
 	
-	int level;
+	public int level;
 	
 	public Farm(){
-		
+		level = 1;
 	}
 
 }

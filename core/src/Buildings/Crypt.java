@@ -2,10 +2,10 @@ package Buildings;
 
 public class Crypt {
 	
-	int level;
+	public int level;
 	
 	public Crypt(){
-		
+		level = 0;
 	}
 
 }

@@ -2,10 +2,10 @@ package Buildings;
 
 public class Barracks {
 
-	int level;
+	public int level;
 	
 	public Barracks(){
-		
+		level = 0;
 	}
 	
 }

@@ -15,12 +15,12 @@ public class Textures {
 	public Textures(){
 		
 		mainMenuBackground = new Texture(Gdx.files.internal("menus/mainMenuScreen.jpg"));
-		gameBackground = new Texture(Gdx.files.internal("menus/gameScreen.jpg"));
+		gameBackground = new Texture(Gdx.files.internal("menus/gameScreen.png"));
 		mapBackground = new Texture(Gdx.files.internal("menus/mapScreen.jpg"));
 		
-		warCard = new Texture(Gdx.files.internal("icons/mainMenuScreen.png"));
-		magicCard = new Texture(Gdx.files.internal("icons/gameScreen.png"));
-		buildCard = new Texture(Gdx.files.internal("icons/mapScreen.png"));
+		warCard = new Texture(Gdx.files.internal("icons/warCard.png"));
+		magicCard = new Texture(Gdx.files.internal("icons/magicCard.png"));
+		buildCard = new Texture(Gdx.files.internal("icons/buildCard.png"));
 		logo = new Texture(Gdx.files.internal("icons/upgrade_icon.png"));
 		
 		buildBackground = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));

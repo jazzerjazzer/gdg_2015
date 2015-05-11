@@ -6,7 +6,13 @@ import com.pikseloyun.gdg2015.MainGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new MainGame(), config);
+		
+		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+		cfg.title = "GDG2015";
+		cfg.width = 1280;
+		cfg.height = 720;
+		
+		new LwjglApplication(new MainGame(), cfg);
+		
 	}
 }

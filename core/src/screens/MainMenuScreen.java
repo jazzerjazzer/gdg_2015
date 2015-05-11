@@ -25,7 +25,7 @@ public class MainMenuScreen implements Screen {
 	private CustomProgressBar bar;
 	
     private Texture fontTexture;
-    private BitmapFont font; //** font **//
+    private BitmapFont font;
 	
 	public MainMenuScreen(MainGame game) {
 		this.game = game;

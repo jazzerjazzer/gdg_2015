@@ -2,10 +2,13 @@ package screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.pikseloyun.gdg2015.MainGame;
 
@@ -18,6 +21,9 @@ public class GameScreen implements Screen {
 	SpriteBatch batch;
 	private Vector3 tap = new Vector3(0,0,0);
 	
+	private Texture fontTexture;
+    private BitmapFont font;
+    
 	public GameScreen(MainGame game) {
 		this.game = game;
 	}
@@ -31,6 +37,9 @@ public class GameScreen implements Screen {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1920, 1080);
 		
+		fontTexture = new Texture(Gdx.files.internal("font.png"));
+		font = new BitmapFont(Gdx.files.internal("font.fnt"), new TextureRegion(fontTexture), false);
+		font.setColor(Color.WHITE);
 	}
 
 	@Override
@@ -45,6 +54,9 @@ public class GameScreen implements Screen {
 			batch.draw(game.textures.magicCard,0,20);
 			batch.draw(game.textures.warCard,0,290);
 			batch.draw(game.textures.buildCard,0,560);
+			font.draw(batch, "Gold : "+game.gameState.gold, 300, 1050);
+			font.draw(batch, "Population : "+game.gameState.population, 700, 1050);
+			font.draw(batch, "Magic : "+game.gameState.sciencePoints, 1200, 1050);
 
 		batch.end();
 		

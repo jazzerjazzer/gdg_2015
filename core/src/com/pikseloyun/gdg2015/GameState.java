@@ -12,7 +12,7 @@ public class GameState {
 
 	public Upgrades upgrades;
 	public Building[] buildings;
-	public ArrayList<Soldier> allSoldiers;
+	public ArrayList<Soldier> level1Soldiers, level2Soldiers, level3Soldiers;
 	
 	// Starting Constants
 	public final int startingPop = 10; 
@@ -24,7 +24,9 @@ public class GameState {
 
 		upgrades = new Upgrades();
 		buildings = new Building[80];
-		allSoldiers = new ArrayList<Soldier>();
+		level1Soldiers = new ArrayList<Soldier>();
+		level2Soldiers = new ArrayList<Soldier>();
+		level3Soldiers = new ArrayList<Soldier>();
 		
 		population = startingPop;
 		soldiers = startingSoldiers;

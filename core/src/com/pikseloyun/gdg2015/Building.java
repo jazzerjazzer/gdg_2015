@@ -11,14 +11,12 @@ public class Building {
 	public Texture texture;
 	public boolean progress;
 	public CustomProgressBar bar;
+	public int health;
 	public Building(int x, int y, Texture texture){
 		level = 1;
 		this.x = x;
 		this.y = y;
 		this.texture = texture;
-	}
-	public String toString(){
-		return ""+level;
-	}
-	
+		health = 5;
+	}	
 }

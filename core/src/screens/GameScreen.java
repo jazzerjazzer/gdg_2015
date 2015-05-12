@@ -37,17 +37,20 @@ public class GameScreen implements Screen, GestureListener {
 	int panX = 0;
 
 	Animator skeletonAnimator, soldierAttackLeftAnim, soldierAttackRightAnim;
+	TextureRegion[] soldierWalkLeft, soldierWalkRight;
+	Animator soldierWalkLeftAnim, soldierWalkRightAnim;
 
 	int placing = -1;
 	long startTime, gameStart = 0;
 	int soldierId = 0;
 	int counter = 0;
-	
+	int level1=10, level2=10, level3=10;
 	TextureRegion[]	soldierAttackLeft;   
 	TextureRegion[] soldierAttackRight; 
 
 	boolean builtFirstBuilding = false;
-
+	
+	boolean level1Over=false, level2Over=false, level3Over=false;
 	public GameScreen(MainGame game) {
 		this.game = game;
 	}
@@ -79,7 +82,7 @@ public class GameScreen implements Screen, GestureListener {
 		walkFrames[2] = new TextureRegion(new Texture("animations/skeleton_animation/s3.png"));
 		walkFrames[3] = new TextureRegion(new Texture("animations/skeleton_animation/s4.png"));
 		walkFrames[4] = new TextureRegion(new Texture("animations/skeleton_animation/s5.png"));
-    
+
 		soldierAttackLeft = new TextureRegion[6];
 		soldierAttackLeft[0] = new TextureRegion(new Texture("animations/soldier_animation/a1.png"));
 		soldierAttackLeft[1] = new TextureRegion(new Texture("animations/soldier_animation/a2.png"));
@@ -88,7 +91,7 @@ public class GameScreen implements Screen, GestureListener {
 		soldierAttackLeft[4] = new TextureRegion(new Texture("animations/soldier_animation/a5.png"));
 		soldierAttackLeft[5] = new TextureRegion(new Texture("animations/soldier_animation/a6.png"));
 
-		       
+
 		soldierAttackRight = new TextureRegion[6];
 		soldierAttackRight[0] = new TextureRegion(new Texture("animations/soldier_animation/b1.png"));
 		soldierAttackRight[1] = new TextureRegion(new Texture("animations/soldier_animation/b2.png"));
@@ -97,17 +100,39 @@ public class GameScreen implements Screen, GestureListener {
 		soldierAttackRight[4] = new TextureRegion(new Texture("animations/soldier_animation/b5.png"));
 		soldierAttackRight[5] = new TextureRegion(new Texture("animations/soldier_animation/b6.png"));
 
-		skeletonAnimator.setupAnimation(batch, 300, 300, walkFrames);
-		soldierAttackRightAnim.setupAnimation(batch, 600, 300, soldierAttackRight);
-		soldierAttackLeftAnim.setupAnimation(batch, 600, 300, soldierAttackLeft);
-		
+		soldierWalkLeft = new TextureRegion[9];
+		soldierWalkLeft[0] = new TextureRegion(new Texture("animations/soldier_animation/c1.png"));
+		soldierWalkLeft[1] = new TextureRegion(new Texture("animations/soldier_animation/c2.png"));
+		soldierWalkLeft[2] = new TextureRegion(new Texture("animations/soldier_animation/c3.png"));
+		soldierWalkLeft[3] = new TextureRegion(new Texture("animations/soldier_animation/c4.png"));
+		soldierWalkLeft[4] = new TextureRegion(new Texture("animations/soldier_animation/c5.png"));
+		soldierWalkLeft[5] = new TextureRegion(new Texture("animations/soldier_animation/c6.png"));
+		soldierWalkLeft[6] = new TextureRegion(new Texture("animations/soldier_animation/c7.png"));
+		soldierWalkLeft[7] = new TextureRegion(new Texture("animations/soldier_animation/c8.png"));
+		soldierWalkLeft[8] = new TextureRegion(new Texture("animations/soldier_animation/c9.png"));
+
+		soldierWalkRight = new TextureRegion[9];
+		soldierWalkRight[0] = new TextureRegion(new Texture("animations/soldier_animation/d1.png"));
+		soldierWalkRight[1] = new TextureRegion(new Texture("animations/soldier_animation/d2.png"));
+		soldierWalkRight[2] = new TextureRegion(new Texture("animations/soldier_animation/d3.png"));
+		soldierWalkRight[3] = new TextureRegion(new Texture("animations/soldier_animation/d4.png"));
+		soldierWalkRight[4] = new TextureRegion(new Texture("animations/soldier_animation/d5.png"));
+		soldierWalkRight[5] = new TextureRegion(new Texture("animations/soldier_animation/d6.png"));
+		soldierWalkRight[6] = new TextureRegion(new Texture("animations/soldier_animation/d7.png"));
+		soldierWalkRight[7] = new TextureRegion(new Texture("animations/soldier_animation/d8.png"));
+		soldierWalkRight[8] = new TextureRegion(new Texture("animations/soldier_animation/d9.png"));
+
+
 		gameStart = System.currentTimeMillis();
 
-		for(int i=0; i<100; i++){
+		for(int i=0; i<level1; i++){
 			Animator x = new Animator();
-			x.setupAnimation(batch, panX + 3000 + i*300, 300, soldierAttackRight);
-			game.gameState.allSoldiers.add(new Soldier(soldierId++, game.textures.soldier, 1000 + i*300, x));
+			x.setupAnimation(batch, panX + 3000 + i*300, 300, soldierWalkRight);
+			game.gameState.level1Soldiers.add(new Soldier(soldierId++, game.textures.soldier,  3000 + i*300, x, 2));
+
 		}
+		
+		
 	}
 
 	@Override
@@ -151,13 +176,100 @@ public class GameScreen implements Screen, GestureListener {
 		}
 
 		batch.begin();
-		for(int i = 0; i < game.gameState.allSoldiers.size(); i++){
+		for(int i = 0; i < game.gameState.level1Soldiers.size(); i++){
+			if(game.gameState.level1Soldiers.get(i).status.equals("dead"))
+				continue;
+			for(int j = 0; j <  game.gameState.level1Soldiers.get(i).health; j++){
+				batch.draw(game.textures.healthBar, panX+game.gameState.level1Soldiers.get(i).x + (j)*25, 550);
+			}
+			if((panX+game.gameState.level1Soldiers.get(i).x)/200 >= 0){
+				if(game.gameState.buildings[(panX+game.gameState.level1Soldiers.get(i).x)/200] != null){
+					if(game.gameState.level1Soldiers.get(i).status.equals("walking")){
+						Animator x = new Animator();
+						x.setupAnimation(batch, panX + game.gameState.level1Soldiers.get(i).x, 300, soldierAttackRight);
+						game.gameState.level1Soldiers.get(i).anim = x;
+						game.gameState.level1Soldiers.get(i).status = "attacking";
+					}
+				}
+			}
 
-			//batch.draw(game.textures.soldier, panX+game.gameState.allSoldiers.get(i).x, 300);
-			game.gameState.allSoldiers.get(i).anim.animate(true, panX);
-			game.gameState.allSoldiers.get(i).anim.animationAreaX -= 1;
-			game.gameState.allSoldiers.get(i).x -= 1;
+			game.gameState.level1Soldiers.get(i).anim.animate(true, panX);
+			if(!game.gameState.level1Soldiers.get(i).status.equals("attacking")){
+				game.gameState.level1Soldiers.get(i).anim.animationAreaX -= 1;
+				game.gameState.level1Soldiers.get(i).x -= 1;
+			}
 
+		}
+		if(level1==0 && !level1Over){
+			level1Over = true;
+			for(int i=0; i<level2; i++){
+				Animator x = new Animator();
+				x.setupAnimation(batch, panX + 9000 + i*300, 300, soldierWalkRight);
+				game.gameState.level2Soldiers.add(new Soldier(soldierId++, game.textures.soldier, panX+9000 + i*300, x, 4));
+			}
+		}
+		
+		if(level1==0){
+			for(int i = 0; i < game.gameState.level2Soldiers.size(); i++){
+				if(game.gameState.level2Soldiers.get(i).status.equals("dead"))
+					continue;
+				for(int j = 0; j <  game.gameState.level2Soldiers.get(i).health; j++){
+					batch.draw(game.textures.healthBar, panX+game.gameState.level2Soldiers.get(i).x + (j)*25, 550);
+				}
+				if((panX+game.gameState.level2Soldiers.get(i).x)/200 >= 0){
+					if(game.gameState.buildings[(panX+game.gameState.level2Soldiers.get(i).x)/200] != null){
+						if(game.gameState.level2Soldiers.get(i).status.equals("walking")){
+							Animator x = new Animator();
+							x.setupAnimation(batch, panX + game.gameState.level2Soldiers.get(i).x, 300, soldierAttackRight);
+							game.gameState.level2Soldiers.get(i).anim = x;
+							game.gameState.level2Soldiers.get(i).status = "attacking";
+						}
+					}
+				}
+
+				game.gameState.level2Soldiers.get(i).anim.animate(true, panX);
+				if(!game.gameState.level2Soldiers.get(i).status.equals("attacking")){
+					game.gameState.level2Soldiers.get(i).anim.animationAreaX -= 1;
+					game.gameState.level2Soldiers.get(i).x -= 1;
+				}
+
+			}
+		}
+		if(level2==0 && !level2Over){
+			level2Over = true;
+			for(int i=0; i<level3; i++){
+				Animator x = new Animator();
+				x.setupAnimation(batch, panX + 9000 + i*300, 300, soldierWalkRight);
+				game.gameState.level3Soldiers.add(new Soldier(soldierId++, game.textures.soldier, panX+9000 + i*300, x, 6));
+			}
+		}
+		if(level2==0){
+
+			for(int i = 0; i < game.gameState.level3Soldiers.size(); i++){
+				if(game.gameState.level3Soldiers.get(i).status.equals("dead"))
+					continue;
+
+				for(int j = 0; j <  game.gameState.level3Soldiers.get(i).health; j++){
+					batch.draw(game.textures.healthBar, panX+game.gameState.level3Soldiers.get(i).x + (j)*25, 550);
+				}
+				if((panX+game.gameState.level3Soldiers.get(i).x)/200 >= 0){
+					if(game.gameState.buildings[(panX+game.gameState.level3Soldiers.get(i).x)/200] != null){
+						if(game.gameState.level3Soldiers.get(i).status.equals("walking")){
+							Animator x = new Animator();
+							x.setupAnimation(batch, panX + game.gameState.level3Soldiers.get(i).x, 300, soldierAttackRight);
+							game.gameState.level3Soldiers.get(i).anim = x;
+							game.gameState.level3Soldiers.get(i).status = "attacking";
+						}
+					}
+				}
+
+				game.gameState.level3Soldiers.get(i).anim.animate(true, panX);
+				if(!game.gameState.level3Soldiers.get(i).status.equals("attacking")){
+					game.gameState.level3Soldiers.get(i).anim.animationAreaX -= 1;
+					game.gameState.level3Soldiers.get(i).x -= 1;
+				}
+
+			}
 		}
 		batch.end();
 
@@ -167,18 +279,6 @@ public class GameScreen implements Screen, GestureListener {
 			batch.end();
 		}
 
-		/*
-		if(System.currentTimeMillis() - gameStart > 5000 && counter < 10){
-			System.out.println("Added! "+ counter) ;
-			game.gameState.allSoldiers.add(new Soldier(soldierId++, game.textures.soldier, 150));
-			counter++;
-		}
-		 */
-
-		/*	batch.begin();
-				animator.animate();
-			batch.end();
-		 */
 
 		if(Gdx.input.justTouched()){
 
@@ -187,6 +287,42 @@ public class GameScreen implements Screen, GestureListener {
 
 			int x = (int) tap.x;
 			int y = (int) tap.y;
+
+			for(int i = 0; i < game.gameState.level1Soldiers.size(); i++){
+				if(x > panX + game.gameState.level1Soldiers.get(i).x && x < panX + game.gameState.level1Soldiers.get(i).x + 250 && 
+						y < 600 && y > 300){
+					game.gameState.level1Soldiers.get(i).health--;
+					if(game.gameState.level1Soldiers.get(i).health == 0){
+						game.gameState.level1Soldiers.get(i).status = "dead"; 
+						level1--;
+					}
+				}
+			}
+			if(level1 == 0){
+				for(int i = 0; i < game.gameState.level2Soldiers.size(); i++){
+					if(x > panX + game.gameState.level2Soldiers.get(i).x && x < panX + game.gameState.level2Soldiers.get(i).x + 250 && 
+							y < 600 && y > 300){
+						game.gameState.level2Soldiers.get(i).health--;
+						if(game.gameState.level2Soldiers.get(i).health == 0){
+							game.gameState.level2Soldiers.get(i).status = "dead"; 
+							level2--;
+						}
+					}
+				}
+			}
+			if(level2 == 0){
+				for(int i = 0; i < game.gameState.level3Soldiers.size(); i++){
+					if(x > panX + game.gameState.level3Soldiers.get(i).x && x < panX + game.gameState.level3Soldiers.get(i).x + 250 && 
+							y < 600 && y > 300){
+						game.gameState.level3Soldiers.get(i).health--;
+						if(game.gameState.level3Soldiers.get(i).health == 0){
+							game.gameState.level3Soldiers.get(i).status = "dead"; 
+							level3--;
+						}
+					}
+				}
+			}
+			
 
 			// Touched magic card
 			if(x < 180 && x > 0 && y < 280 && y > 0){
@@ -247,6 +383,18 @@ public class GameScreen implements Screen, GestureListener {
 					}
 				}
 			}
+		}
+		if(level3 == 0){
+			startTime = 0;
+			while(true){
+				batch.begin();
+				font.draw(batch, "You WON", 300, 800);
+				font.draw(batch, "Click anywhere to go main menu.", 300, 700);
+				batch.end();
+				if(System.currentTimeMillis() - startTime > 2000 && Gdx.input.justTouched()){
+					game.setScreen(new MainMenuScreen(game));
+				}
+			}		
 		}
 	}
 

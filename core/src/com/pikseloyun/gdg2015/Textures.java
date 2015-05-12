@@ -14,7 +14,7 @@ public class Textures {
 	
 	public Texture pumpkin, pumpkin2, pumpkin3, lamp, sign;
 	public Texture soldier;
-	public Texture soundOn, soundOff;
+	public Texture soundOn, soundOff, healthBar;
 	
 	public Textures(){
 
@@ -52,6 +52,7 @@ public class Textures {
 		sign = new Texture(Gdx.files.internal("buildings/sign.png"));
 		
 		soldier = new Texture(Gdx.files.internal("icons/buildCard.png"));
+		healthBar = new Texture (Gdx.files.internal("healthBar.png"));
 		
 	}
 	

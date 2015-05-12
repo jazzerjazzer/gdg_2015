@@ -314,8 +314,8 @@ public class GameScreen implements Screen, GestureListener {
 			level2Over = true;
 			for(int i=0; i<level3; i++){
 				Animator x = new Animator();
-				x.setupAnimation(batch, panX + 11000 + i*300, 300, soldierWalkRight,0.2f);
-				game.gameState.level3Soldiers.add(new Soldier(soldierId++, game.textures.soldier, panX+11000 + i*300, x, 6));
+				x.setupAnimation(batch, panX + 10000 + i*300, 300, soldierWalkRight,0.2f);
+				game.gameState.level3Soldiers.add(new Soldier(soldierId++, game.textures.soldier, panX+10000 + i*300, x, 6));
 			}
 			backgroundUp = game.textures.background3;
 			background = game.textures.gameBackground;
@@ -384,6 +384,8 @@ public class GameScreen implements Screen, GestureListener {
 						if(game.gameState.level2Soldiers.get(i).health == 0){
 							game.gameState.level2Soldiers.get(i).status = "dead"; 
 							level2--;
+							effect1.playEffect();
+
 						}
 					}
 				}
@@ -396,7 +398,7 @@ public class GameScreen implements Screen, GestureListener {
 						if(game.gameState.level3Soldiers.get(i).health == 0){
 							game.gameState.level3Soldiers.get(i).status = "dead"; 
 							level3--;
-							System.out.println(level3);
+							effect1.playEffect();
 						}
 					}
 				}
@@ -538,8 +540,8 @@ public class GameScreen implements Screen, GestureListener {
 		panX += (int)deltaX;
 		if(panX > 0)
 			panX = 0;
-		if (panX < 1920 - 8000)
-			panX = 1920 - 8000;
+		if (panX < 1920 - 6000)
+			panX = 1920 - 6000;
 		return false;
 	}
 

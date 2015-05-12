@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
+import com.pikseloyun.gdg2015.GameState;
 import com.pikseloyun.gdg2015.MainGame;
 
 public class MainMenuScreen implements Screen {
@@ -36,7 +37,7 @@ public class MainMenuScreen implements Screen {
 		
 		batch = new SpriteBatch();
 		background = game.textures.mainMenuBackground;
-		
+		game.gameState = new GameState();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1920, 1080);
 		

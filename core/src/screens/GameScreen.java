@@ -78,28 +78,33 @@ public class GameScreen implements Screen, GestureListener {
 			font.draw(batch, "Gold : "+game.gameState.gold, 300, 1050);
 			font.draw(batch, "Population : "+game.gameState.population, 700, 1050);
 			font.draw(batch, "Magic : "+game.gameState.magic, 1200, 1050);
+		batch.end();
+
 			for (int i = 0; i < game.gameState.buildings.length; i++){
 				if(game.gameState.buildings[i] != null){
 					if(game.gameState.buildings[i].y > 285){
 						game.gameState.buildings[i].y-=5;
 					}
-					batch.draw(game.gameState.buildings[i].texture, panX+game.gameState.buildings[i].x, 
+					batch.begin();
+						batch.draw(game.gameState.buildings[i].texture, panX+game.gameState.buildings[i].x, 
 							game.gameState.buildings[i].y);
+					batch.end();
 					if(game.gameState.buildings[i].progress){
 						//game.gameState.buildings[i].bar.updateProgressBar(delta, 1);
-						game.gameState.buildings[i].bar.bar.setValue(game.gameState.buildings[i].bar.bar.getValue()+1);
-						game.gameState.buildings[i].bar.bar.act(delta);
-						game.gameState.buildings[i].bar.textureBar.draw(batch, panX + game.gameState.buildings[i].x, 
-								100*game.gameState.buildings[i].level + 500, 200, 50);
-					
+						game.gameState.buildings[i].bar.update(camera, 100, 
+								panX+game.gameState.buildings[i].x, game.gameState.buildings[i].y + 330);
+						if(game.gameState.buildings[i].bar.progress == 10){
+							game.gameState.buildings[i].progress = false;
+						}
 					}
 				}
 			}
 			if(System.currentTimeMillis() - startTime < 3000){
-				font.draw(batch, "Cannot place building here. You can upgrade!", 500, 900);
+				batch.begin();
+					font.draw(batch, "Cannot place building here. You can upgrade!", 500, 900);
+					batch.end();
 			}
 			//animator.animate();
-		batch.end();
 		
 		if(Gdx.input.justTouched()){
 			
@@ -142,9 +147,7 @@ public class GameScreen implements Screen, GestureListener {
 				x = Math.abs(x- panX);
 				if(game.gameState.buildings[x/200] != null && game.gameState.buildings[x/200].progress == false){
 					game.gameState.buildings[x/200].progress = true;
-					game.gameState.buildings[x/200].bar = new CustomProgressBar(Color.BLUE, 
-							"empty.png", "empty", 0, 100, (x/200)*200, 
-							game.gameState.buildings[x/200].level*100+50, 200, 50, 2);
+					game.gameState.buildings[x/200].bar = new CustomProgressBar();
 				}
 			}
 

@@ -36,7 +36,6 @@ public class MainMenuScreen implements Screen {
 		
 		batch = new SpriteBatch();
 		background = game.textures.mainMenuBackground;
-		bar = new CustomProgressBar(Color.BLUE, "empty.png", "empty", 0, 100, 100, 100, 290, 100, 2);
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1920, 1080);
@@ -57,9 +56,6 @@ public class MainMenuScreen implements Screen {
 			font.draw(batch, "HELLO WORLD!", 50, 700);
 	        font.draw(batch, "BELOW ARE FOUR BOXES:", 100, 650);
 		batch.end();
-		bar.updateProgressBar(delta, 5);
-
-		
 		
 		if(Gdx.input.justTouched()){
 			

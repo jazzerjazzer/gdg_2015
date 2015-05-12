@@ -19,10 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class CustomProgressBar {
 	
 	Stage stage;
-	ProgressBar bar;
+	public ProgressBar bar;
 	Skin skin;
 	ProgressBarStyle barStyle;
-	TextureRegionDrawable textureBar;
+	public TextureRegionDrawable textureBar;
+	
 	public CustomProgressBar(Color backgroundColor, String backgroundTextureName, String skinName,
 			float min, float max, int positionX, int positionY, int sizeX, int sizeY, int animateDuration){
 		

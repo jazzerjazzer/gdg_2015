@@ -86,7 +86,12 @@ public class GameScreen implements Screen, GestureListener {
 					batch.draw(game.gameState.buildings[i].texture, panX+game.gameState.buildings[i].x, 
 							game.gameState.buildings[i].y);
 					if(game.gameState.buildings[i].progress){
-						
+						//game.gameState.buildings[i].bar.updateProgressBar(delta, 1);
+						game.gameState.buildings[i].bar.bar.setValue(game.gameState.buildings[i].bar.bar.getValue()+1);
+						game.gameState.buildings[i].bar.bar.act(delta);
+						game.gameState.buildings[i].bar.textureBar.draw(batch, panX + game.gameState.buildings[i].x, 
+								100*game.gameState.buildings[i].level + 500, 200, 50);
+					
 					}
 				}
 			}
@@ -133,7 +138,7 @@ public class GameScreen implements Screen, GestureListener {
 					startTime = System.currentTimeMillis();
 				}
 			}
-			if(placing == -1){
+			else if(placing == -1 && y > 300){
 				x = Math.abs(x- panX);
 				if(game.gameState.buildings[x/200] != null && game.gameState.buildings[x/200].progress == false){
 					game.gameState.buildings[x/200].progress = true;
@@ -142,6 +147,8 @@ public class GameScreen implements Screen, GestureListener {
 							game.gameState.buildings[x/200].level*100+50, 200, 50, 2);
 				}
 			}
+
+			
 		}
 		
 	}

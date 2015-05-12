@@ -14,8 +14,8 @@ public class Textures {
 	
 	public Texture pumpkin, pumpkin2, pumpkin3, lamp, sign;
 	public Texture soldier;
-	public Texture soundOn, soundOff, healthBar;
-	
+	public Texture soundOn, soundOff, healthBar, buildingHealth;
+	public Texture background1, background2, background3;
 	public Textures(){
 
 	}
@@ -53,7 +53,11 @@ public class Textures {
 		
 		soldier = new Texture(Gdx.files.internal("icons/buildCard.png"));
 		healthBar = new Texture (Gdx.files.internal("healthBar.png"));
+		buildingHealth = new Texture(Gdx.files.internal("buildingHealth.png"));
 		
+		background1 = new Texture(Gdx.files.internal("z.png"));
+		background2 = new Texture(Gdx.files.internal("y.png"));
+		background3 = new Texture(Gdx.files.internal("x.png"));
 	}
 	
 }

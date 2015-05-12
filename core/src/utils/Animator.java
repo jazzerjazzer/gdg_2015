@@ -8,21 +8,20 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Animator {
 
-    Animation			walkAnimation;      
-    TextureRegion[]     walkFrames;         
+    public Animation			walkAnimation;      
+    public TextureRegion[]     walkFrames;         
     SpriteBatch         spriteBatch;        
     TextureRegion       currentFrame;       
     boolean stop = true;
     float stateTime;                                        
     public int animationAreaX, animationAreaY;
     
-    public void setupAnimation(SpriteBatch spriteBatch, int animationAreaX, int animationAreaY, TextureRegion[] walkFrames){
+    public void setupAnimation(SpriteBatch spriteBatch, int animationAreaX, int animationAreaY, TextureRegion[] walkFrames, float speed){
     	this.spriteBatch = spriteBatch;
     	this.animationAreaX = animationAreaX;
     	this.animationAreaY = animationAreaY;
     	this.walkFrames = walkFrames;
-    	
-        walkAnimation = new Animation(0.20f, walkFrames);
+        walkAnimation = new Animation(speed, walkFrames);
         stateTime = 0f;
     }
 

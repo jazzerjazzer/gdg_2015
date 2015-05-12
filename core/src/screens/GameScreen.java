@@ -2,6 +2,7 @@ package screens;
 
 import utils.Animator;
 import utils.CustomProgressBar;
+import utils.Effect;
 import Buildings.Barracks;
 import Buildings.Crypt;
 import Buildings.House;
@@ -40,7 +41,7 @@ public class GameScreen implements Screen, GestureListener {
 	TextureRegion[] skeletonRegion;
 	TextureRegion[] soldierWalkLeft, soldierWalkRight;
 	Animator soldierWalkLeftAnim, soldierWalkRightAnim;
-
+	Animator goldAnimator;
 	int placing = -1;
 	long startTime, gameStart = 0;
 	int soldierId = 0;
@@ -48,9 +49,11 @@ public class GameScreen implements Screen, GestureListener {
 	int level1=10, level2=10, level3=10;
 	TextureRegion[]	soldierAttackLeft;   
 	TextureRegion[] soldierAttackRight; 
+	TextureRegion[] goldRegion; 
+	Effect effect1, effect2;
 
 	boolean builtFirstBuilding = false;
-
+	int goldAnim = 0;
 
 	boolean level1Over=false, level2Over=false, level3Over=false;
 	public GameScreen(MainGame game) {
@@ -63,7 +66,8 @@ public class GameScreen implements Screen, GestureListener {
 		batch = new SpriteBatch();
 		background = game.textures.gameBackground;
 		backgroundUp = game.textures.background1;
-
+		effect1 = new Effect("data/blop.mp3");
+		effect2 = new Effect("data/gold.mp3");
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1920, 1080);
 
@@ -77,7 +81,8 @@ public class GameScreen implements Screen, GestureListener {
 		skeletonAnimator = new Animator();
 		soldierAttackLeftAnim = new Animator();
 		soldierAttackRightAnim = new Animator();
-
+		
+		
 		TextureRegion[]     walkFrames;        
 		walkFrames = new TextureRegion[5];
 		walkFrames[0] = new TextureRegion(new Texture("animations/skeleton_animation/s1.png"));
@@ -132,11 +137,28 @@ public class GameScreen implements Screen, GestureListener {
 		skeletonRegion[3] = new TextureRegion(new Texture("animations/skeleton_animation/s4.png"));
 		skeletonRegion[4] = new TextureRegion(new Texture("animations/skeleton_animation/s5.png"));
 
+		goldRegion = new TextureRegion[13];
+		goldRegion[0] = new TextureRegion(new Texture("animations/gold_animation/gold1.png"));
+		goldRegion[1] = new TextureRegion(new Texture("animations/gold_animation/gold2.png"));
+		goldRegion[2] = new TextureRegion(new Texture("animations/gold_animation/gold3.png"));
+		goldRegion[3] = new TextureRegion(new Texture("animations/gold_animation/gold4.png"));
+		goldRegion[4] = new TextureRegion(new Texture("animations/gold_animation/gold5.png"));
+		goldRegion[5] = new TextureRegion(new Texture("animations/gold_animation/gold6.png"));
+		goldRegion[6] = new TextureRegion(new Texture("animations/gold_animation/gold7.png"));
+		goldRegion[7] = new TextureRegion(new Texture("animations/gold_animation/gold8.png"));
+		goldRegion[8] = new TextureRegion(new Texture("animations/gold_animation/gold9.png"));
+		goldRegion[9] = new TextureRegion(new Texture("animations/gold_animation/gold10.png"));
+		goldRegion[10] = new TextureRegion(new Texture("animations/gold_animation/gold11.png"));
+		goldRegion[11] = new TextureRegion(new Texture("animations/gold_animation/gold12.png"));
+		goldRegion[12] = new TextureRegion(new Texture("animations/gold_animation/gold13.png"));
+
+		goldAnimator = new Animator();
+		
 		gameStart = System.currentTimeMillis();
 
 		for(int i=0; i<level1; i++){
 			Animator x = new Animator();
-			x.setupAnimation(batch, panX + 3000 + i*300, 300, soldierWalkRight);
+			x.setupAnimation(batch, panX + 3000 + i*300, 300, soldierWalkRight, 0.2f);
 			game.gameState.level1Soldiers.add(new Soldier(soldierId++, game.textures.soldier,  3000 + i*300, x, 2));
 		}
 	}
@@ -152,8 +174,26 @@ public class GameScreen implements Screen, GestureListener {
 		batch.begin();
 		batch.draw(backgroundUp,panX,0);
 		batch.draw(background,panX,0);
+		batch.draw(game.textures.pumpkin, panX+50*5, 300);
+		batch.draw(game.textures.pumpkin2, panX+160*5, 300);
+		batch.draw(game.textures.lamp, panX+280*5, 300);
+		batch.draw(game.textures.pumpkin, panX+320*5, 300);
+		batch.draw(game.textures.pumpkin3, panX+360*5, 300);
+		batch.draw(game.textures.pumpkin, panX+450*5, 300);
+		batch.draw(game.textures.lamp, panX+580*5, 300);
+		batch.draw(game.textures.pumpkin3, panX+650*5, 300);
+		batch.draw(game.textures.sign, panX+725*5, 300);
 
-
+		batch.draw(game.textures.pumpkin, panX+150*5, 300);
+		batch.draw(game.textures.pumpkin2, panX+1160*5, 300);
+		batch.draw(game.textures.lamp, panX+1280*5, 300);
+		batch.draw(game.textures.pumpkin, panX+1320*5, 300);
+		batch.draw(game.textures.pumpkin3, panX+1360*5, 300);
+		batch.draw(game.textures.pumpkin, panX+1450*5, 300);
+		batch.draw(game.textures.lamp, panX+900*5, 300);
+		batch.draw(game.textures.pumpkin3, panX+1650*5, 300);
+		batch.draw(game.textures.sign, panX+805*5, 300);
+		
 		batch.draw(game.textures.magicCard,0,0);
 		batch.draw(game.textures.warCard,182,0);
 		batch.draw(game.textures.buildCard,364,0);
@@ -163,7 +203,7 @@ public class GameScreen implements Screen, GestureListener {
 		//soldierAnimator.animate(true);
 
 		batch.end();
-
+		boolean goldCreated = false;
 		for (int i = 0; i < game.gameState.buildings.length; i++){
 			if(game.gameState.buildings[i] != null){
 				if(game.gameState.buildings[i].y > 285){
@@ -188,12 +228,16 @@ public class GameScreen implements Screen, GestureListener {
 							panX+game.gameState.buildings[i].x - 20, game.gameState.buildings[i].y + 330);
 					if(game.gameState.buildings[i].bar.progress == 10){
 						game.gameState.buildings[i].progress = false;
+						
+						game.gameState.gold+=100;
+						effect2.playEffect();
 					}
 				}
 			}
 		}
 
 		batch.begin();
+		
 		for(int i = 0; i < game.gameState.level1Soldiers.size(); i++){
 			if(game.gameState.level1Soldiers.get(i).status.equals("dead"))
 				continue;
@@ -204,7 +248,7 @@ public class GameScreen implements Screen, GestureListener {
 				if(game.gameState.buildings[(game.gameState.level1Soldiers.get(i).x)/200] != null){
 					if(game.gameState.level1Soldiers.get(i).status.equals("walking")){
 						Animator x = new Animator();
-						x.setupAnimation(batch, game.gameState.level1Soldiers.get(i).x, 300, soldierAttackRight);
+						x.setupAnimation(batch, game.gameState.level1Soldiers.get(i).x, 300, soldierAttackRight,0.2f);
 						game.gameState.level1Soldiers.get(i).anim = x;
 						game.gameState.level1Soldiers.get(i).status = "attacking";
 
@@ -234,7 +278,7 @@ public class GameScreen implements Screen, GestureListener {
 			level1Over = true;
 			for(int i=0; i<level2; i++){
 				Animator x = new Animator();
-				x.setupAnimation(batch, panX + 9000 + i*300, 300, soldierWalkRight);
+				x.setupAnimation(batch, panX + 9000 + i*300, 300, soldierWalkRight,0.2f);
 				game.gameState.level2Soldiers.add(new Soldier(soldierId++, game.textures.soldier, panX+9000 + i*300, x, 4));
 			}
 			backgroundUp = game.textures.background2;
@@ -251,7 +295,7 @@ public class GameScreen implements Screen, GestureListener {
 					if(game.gameState.buildings[(game.gameState.level2Soldiers.get(i).x)/200] != null){
 						if(game.gameState.level2Soldiers.get(i).status.equals("walking")){
 							Animator x = new Animator();
-							x.setupAnimation(batch, game.gameState.level2Soldiers.get(i).x, 300, soldierAttackRight);
+							x.setupAnimation(batch, game.gameState.level2Soldiers.get(i).x, 300, soldierAttackRight,0.2f);
 							game.gameState.level2Soldiers.get(i).anim = x;
 							game.gameState.level2Soldiers.get(i).status = "attacking";
 						}
@@ -270,7 +314,7 @@ public class GameScreen implements Screen, GestureListener {
 			level2Over = true;
 			for(int i=0; i<level3; i++){
 				Animator x = new Animator();
-				x.setupAnimation(batch, panX + 11000 + i*300, 300, soldierWalkRight);
+				x.setupAnimation(batch, panX + 11000 + i*300, 300, soldierWalkRight,0.2f);
 				game.gameState.level3Soldiers.add(new Soldier(soldierId++, game.textures.soldier, panX+11000 + i*300, x, 6));
 			}
 			backgroundUp = game.textures.background3;
@@ -289,7 +333,7 @@ public class GameScreen implements Screen, GestureListener {
 					if(game.gameState.buildings[(game.gameState.level3Soldiers.get(i).x)/200] != null){
 						if(game.gameState.level3Soldiers.get(i).status.equals("walking")){
 							Animator x = new Animator();
-							x.setupAnimation(batch, game.gameState.level3Soldiers.get(i).x, 300, soldierAttackRight);
+							x.setupAnimation(batch, game.gameState.level3Soldiers.get(i).x, 300, soldierAttackRight, 0.2f);
 							game.gameState.level3Soldiers.get(i).anim = x;
 							game.gameState.level3Soldiers.get(i).status = "attacking";
 						}
@@ -328,6 +372,7 @@ public class GameScreen implements Screen, GestureListener {
 					if(game.gameState.level1Soldiers.get(i).health == 0){
 						game.gameState.level1Soldiers.get(i).status = "dead"; 
 						level1--;
+						effect1.playEffect();
 					}
 				}
 			}
@@ -376,18 +421,18 @@ public class GameScreen implements Screen, GestureListener {
 					if(placing == 1){
 						game.gameState.buildings[x/200] = new Crypt((x/200)*200, y, game.textures.smallMagic); 
 						builtFirstBuilding = true;
-
 					}
 					if(placing == 2){
 						Animator a = new Animator();
-						a.setupAnimation(batch, panX+(x/200)*200, 300, skeletonRegion);
+						a.setupAnimation(batch, panX+(x/200)*200, 300, skeletonRegion, 0.2f);
 						game.gameState.buildings[x/200] = new Barracks((x/200)*200, y, game.textures.smallMilitary, a);
 						builtFirstBuilding = true;
-
+						
 					} 
 					if(placing == 3){
 						game.gameState.buildings[x/200] = new House((x/200)*200, y, game.textures.smallHouse); 
 						builtFirstBuilding = true;
+						game.gameState.population+=10;
 					}
 					placing = -1;
 				}else{
@@ -418,7 +463,6 @@ public class GameScreen implements Screen, GestureListener {
 				if(System.currentTimeMillis() - startTime > 2000 && Gdx.input.justTouched()){
 					game.setScreen(new MainMenuScreen(game));
 				}
-
 			}
 		}
 		if(level3 == 0){

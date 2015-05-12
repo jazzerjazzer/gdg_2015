@@ -29,7 +29,7 @@ public class LoadingScreen implements Screen {
 		camera.setToOrtho(false, 1920, 1080);
 		batch.setProjectionMatrix(camera.combined);
 		
-		background = new Texture(Gdx.files.internal("menus/loadingScreen.jpg"));
+		background = new Texture(Gdx.files.internal("menus/loadingScreen.png"));
 		bgLoaded = true;
 	}
 

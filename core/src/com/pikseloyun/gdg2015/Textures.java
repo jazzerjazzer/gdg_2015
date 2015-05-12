@@ -13,7 +13,7 @@ public class Textures {
 	public Texture smallMilitary, middleMilitary, bigMilitary;
 	
 	public Texture pumpkin, pumpkin2, pumpkin3, lamp, sign;
-
+	public Texture soldier;
 	
 	public Textures(){
 
@@ -46,6 +46,8 @@ public class Textures {
 		pumpkin3 = new Texture(Gdx.files.internal("buildings/pumpkin3.png"));
 		lamp = new Texture(Gdx.files.internal("buildings/lamp.png"));
 		sign = new Texture(Gdx.files.internal("buildings/sign.png"));
+		
+		soldier = new Texture(Gdx.files.internal("soldier-icon.png"));
 		
 	}
 	

@@ -1,5 +1,7 @@
 package com.pikseloyun.gdg2015;
 
+import java.util.ArrayList;
+
 public class GameState {
 
 	public int population, soldiers, gold, magic;
@@ -10,7 +12,7 @@ public class GameState {
 
 	public Upgrades upgrades;
 	public Building[] buildings;
-
+	public ArrayList<Soldier> allSoldiers;
 	// Starting Constants
 	public final int startingPop = 10; 
 	public final int startingSoldiers = 1; 
@@ -21,7 +23,8 @@ public class GameState {
 
 		upgrades = new Upgrades();
 		buildings = new Building[80];
-
+		allSoldiers = new ArrayList<Soldier>();
+		
 		population = startingPop;
 		soldiers = startingSoldiers;
 		gold = startingGold;

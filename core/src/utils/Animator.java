@@ -8,44 +8,30 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Animator {
 
-    private int  FRAME_COLS;     
-    private int  FRAME_ROWS;     
-
     Animation			walkAnimation;      
-    Texture         	walkSheet;          
     TextureRegion[]     walkFrames;         
     SpriteBatch         spriteBatch;        
     TextureRegion       currentFrame;       
-    
+    boolean stop = true;
     float stateTime;                                        
     int animationAreaX, animationAreaY;
     
-    public void setupAnimation(Texture walkSheet, SpriteBatch spriteBatch, int animationAreaX, int animationAreaY,
-    		int frameColumns, int frameRows){
-    	this.walkSheet = walkSheet;
+    public void setupAnimation(SpriteBatch spriteBatch, int animationAreaX, int animationAreaY, TextureRegion[] walkFrames){
     	this.spriteBatch = spriteBatch;
     	this.animationAreaX = animationAreaX;
     	this.animationAreaY = animationAreaY;
-    	this.FRAME_COLS = frameColumns;
-    	this.FRAME_ROWS = frameRows;
+    	this.walkFrames = walkFrames;
     	
-        TextureRegion[][] tmp = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, 
-        		walkSheet.getHeight()/FRAME_ROWS);
-        walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        int index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                walkFrames[index++] = tmp[i][j];
-            }
-        }
-        walkAnimation = new Animation(0.025f, walkFrames);
+        walkAnimation = new Animation(0.20f, walkFrames);
         stateTime = 0f;
     }
 
-    public void animate() {
-        stateTime += Gdx.graphics.getDeltaTime();
-        currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-        spriteBatch.draw(currentFrame, animationAreaX, animationAreaX);
+    public void animate(boolean start) {
+    	if(start){
+    		stateTime += Gdx.graphics.getDeltaTime();
+            currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+            spriteBatch.draw(currentFrame, animationAreaX, animationAreaX);
+    	}
     }
 
 }

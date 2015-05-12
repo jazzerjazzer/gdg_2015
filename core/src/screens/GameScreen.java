@@ -1,7 +1,6 @@
 package screens;
 
-import java.sql.Time;
-
+import sun.security.x509.DeltaCRLIndicatorExtension;
 import utils.Animator;
 import utils.CustomProgressBar;
 import Buildings.Barracks;
@@ -22,6 +21,7 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.pikseloyun.gdg2015.MainGame;
+import com.pikseloyun.gdg2015.Soldier;
 
 public class GameScreen implements Screen, GestureListener {
 
@@ -36,9 +36,11 @@ public class GameScreen implements Screen, GestureListener {
     private BitmapFont font;
     private GestureDetector gd;
     int panX = 0;
-    Animator animator;
+    Animator skeletonAnimator, soldierAnimator;
     int placing = -1;
-    long startTime;
+    long startTime, gameStart=0;
+    int soldierId = 0;
+	int counter = 0;
 	
     public GameScreen(MainGame game) {
 		this.game = game;
@@ -58,15 +60,35 @@ public class GameScreen implements Screen, GestureListener {
 		font.setColor(Color.WHITE);
 		gd = new GestureDetector(this);
 		Gdx.input.setInputProcessor(gd);
-		animator = new Animator();
-		animator.setupAnimation(new Texture("animations/warrior_spritesheet.png"), batch, 300, 300, 6, 6);
+		skeletonAnimator = new Animator();
+		soldierAnimator = new Animator();
+	    TextureRegion[]     walkFrames;        
+    	walkFrames = new TextureRegion[5];
+    	walkFrames[0] = new TextureRegion(new Texture("animations/skeleton_animation/s1.png"));
+    	walkFrames[1] = new TextureRegion(new Texture("animations/skeleton_animation/s2.png"));
+    	walkFrames[2] = new TextureRegion(new Texture("animations/skeleton_animation/s3.png"));
+    	walkFrames[3] = new TextureRegion(new Texture("animations/skeleton_animation/s4.png"));
+    	walkFrames[4] = new TextureRegion(new Texture("animations/skeleton_animation/s5.png"));
+	    
+    	TextureRegion[]     soldierFrames;        
+    	soldierFrames = new TextureRegion[6];
+    	soldierFrames[0] = new TextureRegion(new Texture("animations/soldier_animation/a1.png"));
+    	soldierFrames[1] = new TextureRegion(new Texture("animations/soldier_animation/a2.png"));
+    	soldierFrames[2] = new TextureRegion(new Texture("animations/soldier_animation/a3.png"));
+    	soldierFrames[3] = new TextureRegion(new Texture("animations/soldier_animation/a4.png"));
+    	soldierFrames[4] = new TextureRegion(new Texture("animations/soldier_animation/a5.png"));
+    	soldierFrames[5] = new TextureRegion(new Texture("animations/soldier_animation/a6.png"));
+
+    	skeletonAnimator.setupAnimation(batch, 300, 300, walkFrames);
+		soldierAnimator.setupAnimation(batch, 600, 600, soldierFrames);
+		gameStart = System.currentTimeMillis();
 	}
 
 	@Override
 	public void render(float delta) {
 		
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		//Gdx.gl.glClearColor(1, 1, 1, 1);
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		
@@ -78,6 +100,8 @@ public class GameScreen implements Screen, GestureListener {
 			font.draw(batch, "Gold : "+game.gameState.gold, 300, 1050);
 			font.draw(batch, "Population : "+game.gameState.population, 700, 1050);
 			font.draw(batch, "Magic : "+game.gameState.magic, 1200, 1050);
+			soldierAnimator.animate(true);
+
 		batch.end();
 
 			for (int i = 0; i < game.gameState.buildings.length; i++){
@@ -99,14 +123,30 @@ public class GameScreen implements Screen, GestureListener {
 					}
 				}
 			}
+			for(int i = 0; i < game.gameState.allSoldiers.size(); i++){
+				//System.out.println("X: " + game.gameState.allSoldiers.get(i).x);
+				batch.begin();
+				batch.draw(game.gameState.allSoldiers.get(i).texture, game.gameState.allSoldiers.get(i).x+2000, 500);
+				game.gameState.allSoldiers.get(i).x -= 1;
+				batch.end();
+			}
 			if(System.currentTimeMillis() - startTime < 3000){
 				batch.begin();
 					font.draw(batch, "Cannot place building here. You can upgrade!", 500, 900);
-					batch.end();
+				batch.end();
 			}
-			//animator.animate();
-		
-		if(Gdx.input.justTouched()){
+
+			if(System.currentTimeMillis() - gameStart > 5000 && counter < 10){
+				System.out.println("Added! "+ counter) ;
+				game.gameState.allSoldiers.add(new Soldier(soldierId++, game.textures.soldier));
+				counter++;
+			}
+			
+			/*batch.begin();
+				
+				animator.animate();
+			batch.end();*/
+			if(Gdx.input.justTouched()){
 			
 			tap.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(tap);
@@ -150,10 +190,7 @@ public class GameScreen implements Screen, GestureListener {
 					game.gameState.buildings[x/200].bar = new CustomProgressBar();
 				}
 			}
-
-			
 		}
-		
 	}
 
 	@Override

@@ -25,7 +25,7 @@ public class CustomProgressBar {
 			progress++;
 		}
 		// Width of progress bar on screen relevant to Screen width
-		float progressBarWidth = 20 * progress;
+		float progressBarWidth = 22 * progress;
 		camera.update();
 		mShapeRenderer.setProjectionMatrix(camera.combined);
 		mShapeRenderer.begin(ShapeType.Filled);

@@ -13,6 +13,7 @@ public class GameState {
 	public Upgrades upgrades;
 	public Building[] buildings;
 	public ArrayList<Soldier> allSoldiers;
+	
 	// Starting Constants
 	public final int startingPop = 10; 
 	public final int startingSoldiers = 1; 

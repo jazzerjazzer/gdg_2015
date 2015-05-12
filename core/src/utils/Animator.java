@@ -14,7 +14,7 @@ public class Animator {
     TextureRegion       currentFrame;       
     boolean stop = true;
     float stateTime;                                        
-    int animationAreaX, animationAreaY;
+    public int animationAreaX, animationAreaY;
     
     public void setupAnimation(SpriteBatch spriteBatch, int animationAreaX, int animationAreaY, TextureRegion[] walkFrames){
     	this.spriteBatch = spriteBatch;
@@ -26,11 +26,11 @@ public class Animator {
         stateTime = 0f;
     }
 
-    public void animate(boolean start) {
+    public void animate(boolean start, int panX) {
     	if(start){
     		stateTime += Gdx.graphics.getDeltaTime();
             currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-            spriteBatch.draw(currentFrame, animationAreaX, animationAreaX);
+            spriteBatch.draw(currentFrame, panX + animationAreaX, animationAreaY);
     	}
     }
 

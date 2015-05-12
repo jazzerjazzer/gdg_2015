@@ -8,9 +8,11 @@ public class MainGame extends Game {
 	
 	public Textures textures;
 	public GameState gameState;
+	public boolean sound;
 	
 	@Override
 	public void create() {
+		sound = true;
 		textures = new Textures();
 		gameState = new GameState();
 		this.setScreen(new LoadingScreen(this));

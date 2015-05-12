@@ -14,6 +14,7 @@ public class Textures {
 	
 	public Texture pumpkin, pumpkin2, pumpkin3, lamp, sign;
 	public Texture soldier;
+	public Texture soundOn, soundOff;
 	
 	public Textures(){
 
@@ -21,9 +22,12 @@ public class Textures {
 	
 	public void loadTextures(){
 		
-		mainMenuBackground = new Texture(Gdx.files.internal("menus/mainMenuScreen.jpg"));
+		mainMenuBackground = new Texture(Gdx.files.internal("menus/mainMenuScreen.png"));
 		gameBackground = new Texture(Gdx.files.internal("menus/gameScreen.png"));
 		mapBackground = new Texture(Gdx.files.internal("menus/mapScreen.jpg"));
+		
+		soundOn = new Texture(Gdx.files.internal("menus/soundOn.png"));
+		soundOff = new Texture(Gdx.files.internal("menus/soundOff.png"));
 		
 		warCard = new Texture(Gdx.files.internal("icons/warCard.png"));
 		magicCard = new Texture(Gdx.files.internal("icons/magicCard.png"));
@@ -47,7 +51,7 @@ public class Textures {
 		lamp = new Texture(Gdx.files.internal("buildings/lamp.png"));
 		sign = new Texture(Gdx.files.internal("buildings/sign.png"));
 		
-		soldier = new Texture(Gdx.files.internal("soldier-icon.png"));
+		soldier = new Texture(Gdx.files.internal("icons/buildCard.png"));
 		
 	}
 	

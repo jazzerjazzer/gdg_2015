@@ -53,8 +53,10 @@ public class MainMenuScreen implements Screen {
 		
 		batch.begin();
 			batch.draw(background,0,0);
-			font.draw(batch, "HELLO WORLD!", 50, 700);
-	        font.draw(batch, "BELOW ARE FOUR BOXES:", 100, 650);
+			if(game.sound)
+				batch.draw(game.textures.soundOn, 10, 950);
+			else
+				batch.draw(game.textures.soundOff, 10, 950);
 		batch.end();
 		
 		if(Gdx.input.justTouched()){
@@ -65,9 +67,14 @@ public class MainMenuScreen implements Screen {
 			int x = (int) tap.x;
 			int y = (int) tap.y;
 			
-			// rakamlar değişcek.
-			if(x < 1920 && x > 500 && y < 1080 && y > 440){
+			if(x < 1750 && x > 1570 && y < 920 && y > 850){
 				game.setScreen(new GameScreen(game));
+			} 
+			if(x < 1750 && x > 1570 && y < 480 && y > 435){
+				System.exit(0);
+			}
+			if(x < 130 && x > 10 && y < 1080 && y > 950){
+				game.sound = !game.sound;
 			}
 
 		}
